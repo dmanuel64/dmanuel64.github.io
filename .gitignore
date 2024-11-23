@@ -26,3 +26,9 @@ Cargo.lock
 
 # Leptos
 /dist
+
+# NodeJS
+/node_modules
+
+# VSCode
+/.vscode
