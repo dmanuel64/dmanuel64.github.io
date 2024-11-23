@@ -1,0 +1,22 @@
+name: Deploy to GitHub Pages
+
+on:
+    push:
+        branches:
+            - main
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+
+        steps:
+            - uses: actions/checkout@v4
+
+            - name: Install Trunk
+              run: cargo install trunk
+            
+            - name: Install wasm32 Target
+              run: rustup target add wasm32-unknown-unknown
+
+            - name: Build with Trunk
+              run: trunk build --release
