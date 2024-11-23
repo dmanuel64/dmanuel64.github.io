@@ -5,7 +5,7 @@ pub fn Home() -> impl IntoView {
     let (count, set_count) = create_signal(0);
 
     view! {
-        <main class="my-0 mx-auto max-w-3xl text-center">
+        <main class="my-0 mx-auto max-w-3xl text-center animate-fadeIn">
             <h2 class="p-6 text-4xl">"Welcome to my Website"</h2>
             <p class="px-10 pb-10 text-center">"Hello, world"</p>
             <button
