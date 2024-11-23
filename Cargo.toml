@@ -4,5 +4,10 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
+console_error_panic_hook = { version = "0.1.7", optional = true }
 leptos = { version = "0.6.15", features = ["csr", "nightly"] }
+leptos_router = { version = "0.6.15", features = ["csr"] }
 trunk = "0.21.4"
+
+[features]
+dev = ["dep:console_error_panic_hook"]
