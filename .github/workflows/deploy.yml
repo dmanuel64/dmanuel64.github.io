@@ -6,17 +6,28 @@ on:
             - main
 
 jobs:
-    build:
+    deploy:
         runs-on: ubuntu-latest
 
         steps:
             - uses: actions/checkout@v4
+            - uses: jetli/trunk-action@v0.5.0 # Setup trunk without having to build it
 
-            - name: Install Trunk
-              run: cargo install trunk
+            - name: Install nightly Rust
+              run: |
+                rustup toolchain install nightly
+                rustup default nightly
             
             - name: Install wasm32 Target
               run: rustup target add wasm32-unknown-unknown
 
             - name: Build with Trunk
               run: trunk build --release
+            
+            - name: Upload Build Artifacts
+              uses: actions/upload-pages-artifact@v3
+              with:
+                path: dist
+            
+            - name: Deploy to GitHub Pages
+              uses: actions/deploy-pages@v4
