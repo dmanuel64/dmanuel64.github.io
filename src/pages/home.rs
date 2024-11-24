@@ -43,10 +43,10 @@ pub fn Home() -> impl IntoView {
                     <NavCard title="Home" href="/">"To Home page"</NavCard>
                 </GridItem>
                 <GridItem class="delay-1000">
-                    <NavCard title="Resume" href="/">"To Resume page"</NavCard>
+                    <NavCard title="Resume" href="/resume">"To Resume page"</NavCard>
                 </GridItem>
                 <GridItem class="delay-1000">
-                    <NavCard title="Contact" href="/">"To Contact page"</NavCard>
+                    <NavCard title="Contact" href="/contact">"To Contact page"</NavCard>
                 </GridItem>
             </Grid>
         </Flex>

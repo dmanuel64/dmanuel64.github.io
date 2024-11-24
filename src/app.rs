@@ -1,7 +1,7 @@
 use leptos::*;
 use leptos_router::*;
 
-use crate::pages::home::Home;
+use crate::pages::{home::Home, not_found::NotFound};
 
 #[component]
 pub fn App() -> impl IntoView {
@@ -11,7 +11,7 @@ pub fn App() -> impl IntoView {
                 <main>
                     <Routes>
                         <Route path="" view=Home/>
-                        <Route path="/*" view=|| view! { <h1>"Not Found"</h1> }/>
+                        <Route path="/*" view=NotFound/>
                     </Routes>
                 </main>
             </Router>
