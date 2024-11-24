@@ -1,23 +1,76 @@
+use icondata_ai;
+use icondata_core::IconData;
 use leptos::*;
 use thaw::*;
-use icondata_ai;
 
+/// A button on the NavBar that navigates to a URL
 #[component]
-pub fn NavItem(text: &'static str, href: &'static str) -> impl IntoView {
+fn NavButton(
+    /// The text to display
+    text: &'static str,
+    /// URL to navigate to
+    href: &'static str,
+    /// Icon to display next to the text
+    #[prop(optional, into)]
+    icon: Signal<Option<&'static IconData>>,
+    /// Additional class variables to pass
+    #[prop(default = "text-lg")]
+    content_class: &'static str,
+) -> impl IntoView {
     view! {
-        <Button icon=icondata_ai::AiHomeFilled variant=ButtonVariant::Link>
-            <a href=href>{text}</a>
-        </Button>
+        <a href=href>
+            <Button
+                class=format!("text-white p-2 min-w-[40px] {content_class}").as_str()
+                icon=icon
+                variant=ButtonVariant::Link
+            >
+                {text}
+            </Button>
+        </a>
     }
 }
 
+/// A NavButton that is displayed by an icon instead of text
 #[component]
-pub fn NavBar(children: Children) -> impl IntoView {
-    view! {
-        <Layout content_class="bg-gray-800 flex justify-end items-center h-16 px-4">
-            {children()}
-        </Layout>
-    }
+fn NavIconButton(
+    /// URL to navigate to
+    href: &'static str,
+    /// Icon to display
+    #[prop(into)]
+    icon: Signal<Option<&'static IconData>>,
+) -> impl IntoView {
+    view! { <NavButton text="" href=href icon=icon content_class="text-2xl" /> }
 }
 
+/// NavBar background container
+#[component]
+fn NavContainer(children: Children) -> impl IntoView {
+    view! { <Flex class="bg-gray-800 items-center h-16 px-4">{children()}</Flex> }
+}
 
+#[component]
+pub fn NavBar() -> impl IntoView {
+    view! {
+        <NavContainer>
+            <Flex class="space-x-4">
+                <NavButton text="Home" href="/" icon=move || Some(icondata_ai::AiHomeFilled) />
+                <NavButton text="About" href="/about" />
+                <NavButton text="Resume" href="/resume" />
+                <NavButton text="Projects" href="/projects" />
+                <NavButton text="Blog" href="/blog" />
+                <NavButton text="Contact" href="/contact" />
+            </Flex>
+            <Flex class="ml-auto space-x-4">
+                <Text>{}</Text>
+                <NavIconButton
+                    icon=move || Some(icondata_ai::AiGithubFilled)
+                    href="https://github.com/dmanuel64"
+                />
+                <NavIconButton
+                    icon=move || Some(icondata_ai::AiLinkedinFilled)
+                    href="https://www.linkedin.com/in/dylan-manuel-661642169/"
+                />
+            </Flex>
+        </NavContainer>
+    }
+}

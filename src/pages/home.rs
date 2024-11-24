@@ -1,13 +1,11 @@
 use leptos::*;
 use thaw::*;
 
-use crate::components::navbar::{NavBar, NavItem};
+use crate::components::navbar::NavBar;
 
 #[component]
 pub fn Home() -> impl IntoView {
     view! {
-        <NavBar>
-            <NavItem text="Home" href="/"/>
-        </NavBar>
+        <NavBar/>
     }
 }
