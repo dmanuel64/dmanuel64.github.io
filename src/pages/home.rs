@@ -9,7 +9,7 @@ fn NavCard(title: &'static str, href: &'static str, children: Children) -> impl 
         <a href=href>
             <Layout
                 content_class="rounded-3xl shadow-lg bg-white overflow-hidden text-center"
-                class="border border-gray-200 rounded-3xl shadow-lg bg-white overflow-hidden transform transition-transform duration-200 hover:scale-105"
+                class="border border-gray-200 rounded-3xl shadow-lg bg-white overflow-hidden transform transition-transform duration-200 hover:scale-105 animate-fadeInMoveUp"
             >
                 <LayoutHeader class="relative -m-6 -mt-6">
                     <img
@@ -39,8 +39,14 @@ pub fn Home() -> impl IntoView {
                 "Here is some text"
             </Layout>
             <Grid cols=3 x_gap=8 y_gap=8>
-                <GridItem>
+                <GridItem class="delay-1000">
                     <NavCard title="Home" href="/">"To Home page"</NavCard>
+                </GridItem>
+                <GridItem class="delay-1000">
+                    <NavCard title="Resume" href="/">"To Resume page"</NavCard>
+                </GridItem>
+                <GridItem class="delay-1000">
+                    <NavCard title="Contact" href="/">"To Contact page"</NavCard>
                 </GridItem>
             </Grid>
         </Flex>
