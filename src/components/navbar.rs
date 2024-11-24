@@ -54,14 +54,13 @@ pub fn NavBar() -> impl IntoView {
         <NavContainer>
             <Flex class="space-x-4">
                 <NavButton text="Home" href="/" icon=move || Some(icondata_ai::AiHomeFilled) />
-                <NavButton text="About" href="/about" />
+                // <NavButton text="About" href="/about" />
                 <NavButton text="Resume" href="/resume" />
-                <NavButton text="Projects" href="/projects" />
-                <NavButton text="Blog" href="/blog" />
+                // <NavButton text="Projects" href="/projects" />
+                // <NavButton text="Blog" href="/blog" />
                 <NavButton text="Contact" href="/contact" />
             </Flex>
             <Flex class="ml-auto space-x-4">
-                <Text>{}</Text>
                 <NavIconButton
                     icon=move || Some(icondata_ai::AiGithubFilled)
                     href="https://github.com/dmanuel64"
