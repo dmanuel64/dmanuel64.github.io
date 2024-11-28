@@ -32,13 +32,12 @@ fn NavCard(title: &'static str, href: &'static str, children: Children) -> impl 
 #[component]
 pub fn Home() -> impl IntoView {
     view! {
-        <NavBar />
         <Flex align=FlexAlign::Center vertical=true>
             <Layout class="text-center animate-fadeIn">
                 <LayoutHeader>"Welcome to my Website"</LayoutHeader>
                 "Here is some text"
             </Layout>
-            <Grid cols=3 x_gap=8 y_gap=8 class="flex justify-between p-5">
+            <Grid cols=3 x_gap=8 y_gap=8 class="p-8">
                 <GridItem class="delay-1000">
                     <NavCard title="Home" href="/">"To Home page"</NavCard>
                 </GridItem>

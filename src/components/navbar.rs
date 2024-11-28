@@ -45,7 +45,12 @@ fn NavIconButton(
 /// NavBar background container
 #[component]
 fn NavContainer(children: Children) -> impl IntoView {
-    view! { <Flex class="bg-gray-800 items-center h-16 px-4">{children()}</Flex> }
+    view! {
+        <Flex class="bg-gray-800 fixed w-full items-center h-16 px-4 shadow-2xl z-50">
+            {children()}
+        </Flex>
+        <div class="h-16"></div>
+    }
 }
 
 #[component]
