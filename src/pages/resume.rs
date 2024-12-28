@@ -1,7 +1,7 @@
 use leptos::*;
 use thaw::*;
 
-use crate::components::{navbar::NavBar, section::Section};
+use crate::components::section::Section;
 
 const RUST_LOGO_URL: &str = "https://www.rust-lang.org/static/images/rust-logo-blk.svg";
 const PYTHON_LOGO_URL: &str = "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Python-logo-notext.svg/800px-Python-logo-notext.svg.png";

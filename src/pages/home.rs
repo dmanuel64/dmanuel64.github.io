@@ -1,7 +1,7 @@
 use leptos::*;
 use thaw::*;
 
-use crate::components::navbar::NavBar;
+use crate::components::{footer::Footer, navbar::NavBar};
 
 #[component]
 fn NavCard(title: &'static str, href: &'static str, children: Children) -> impl IntoView {
