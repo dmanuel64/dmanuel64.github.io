@@ -3,15 +3,20 @@ name = "dmanuel64-site"
 version = "0.1.0"
 edition = "2021"
 
-[dependencies]
-console_error_panic_hook = { version = "0.1.7", optional = true }
-icondata_ai = "0.0.10"
-icondata_core = "0.1.0"
-leptos = { version = "0.6.15", features = ["csr", "nightly"] }
-leptos-use = "0.13.11"
-leptos_router = { version = "0.6.15", features = ["csr"] }
-thaw = { version = "0.3.4", features = ["csr"] }
-trunk = "0.21.4"
+# TODO: comment out for release
+[target.x86_64-pc-windows-msvc]
+rustflags = ["--cfg", "erase_components"]
 
-[features]
-dev = ["dep:console_error_panic_hook"]
+[target.wasm32-unknown-unknown]
+rustflags = ["--cfg", "erase_components"]
+
+[dependencies]
+console_error_panic_hook = "0.1.7"
+console_log = "1.0.0"
+icondata_ai = "0.1.0"
+icondata_core = "0.1.0"
+leptos = { version = "0.8.2", features = ["csr", "nightly"] }
+leptos-use = "0.16.2"
+leptos_router = { version = "0.8.2", features = ["nightly"] }
+log = "0.4.27"
+thaw = { version = "0.4.7", features = ["csr"] }

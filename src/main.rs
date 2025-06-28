@@ -1,14 +1,9 @@
-mod app;
-mod components;
-mod pages;
+use leptos::prelude::*;
 
-use app::App;
-use leptos::*;
-
-fn main() {
-    #[cfg(feature = "dev")]
-    {
-        console_error_panic_hook::set_once();
-    }
-    leptos::mount_to_body(|| view! { <App /> })
+pub fn main() {
+    _ = console_log::init_with_level(log::Level::Debug);
+    console_error_panic_hook::set_once();
+    mount_to_body(|| {
+        view! { <div id="root">"Hello world"</div> }
+    })
 }
