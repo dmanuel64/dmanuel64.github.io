@@ -4,20 +4,26 @@ use thaw::*;
 
 use crate::pages::*;
 
+const HIDDEN_URL_TAILWIND_CSS: &'static str =
+    "text-inherit no-underline hover:text-inherit active:text-inherit visited:text-inherit";
 #[component]
 fn NavBar() -> impl IntoView {
     let selected_value = RwSignal::new(String::new());
     view! {
-        <Flex align=FlexAlign::Center justify=FlexJustify::SpaceBetween>
+        <Flex class="nav-bar" align=FlexAlign::Center justify=FlexJustify::SpaceBetween>
             <TabList selected_value>
-                <Flex justify=FlexJustify::SpaceAround>
-                    <Tab value="home"><a href="/">"Home"</a></Tab>
+                <Flex class="nav-items" justify=FlexJustify::SpaceAround>
+                    <Tab value="home">
+                        <a class=HIDDEN_URL_TAILWIND_CSS href="/">
+                            "Home"
+                        </a>
+                    </Tab>
                     <Tab value="resume">"Resume"</Tab>
                     <Tab value="contact">"Contact"</Tab>
                     <Tab value="blog">"Blog"</Tab>
                 </Flex>
             </TabList>
-            <Flex justify=FlexJustify::End>
+            <Flex class="nav-external-links" justify=FlexJustify::End>
                 <Text>"External links"</Text>
             </Flex>
         </Flex>
