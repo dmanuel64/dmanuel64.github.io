@@ -4,8 +4,29 @@ use thaw::*;
 
 use crate::pages::*;
 
-const HIDDEN_URL_TAILWIND_CSS: &'static str =
-    "text-inherit no-underline hover:text-inherit active:text-inherit visited:text-inherit";
+#[component]
+fn NavItem(
+    #[prop(into)] value: String,
+    #[prop(into, optional)] href: String,
+    #[prop(into, optional)] id: String,
+) -> impl IntoView {
+    let id = if id == String::default() {
+        value.to_lowercase().replace(" ", "-")
+    } else {
+        id
+    };
+    view! {
+        <Tab class="nav-item" value=id>
+            <a
+                class="text-inherit no-underline hover:text-inherit active:text-inherit visited:text-inherit"
+                href=href
+            >
+                {value}
+            </a>
+        </Tab>
+    }
+}
+
 #[component]
 fn NavBar() -> impl IntoView {
     let selected_value = RwSignal::new(String::new());
@@ -13,14 +34,10 @@ fn NavBar() -> impl IntoView {
         <Flex class="nav-bar" align=FlexAlign::Center justify=FlexJustify::SpaceBetween>
             <TabList selected_value>
                 <Flex class="nav-items" justify=FlexJustify::SpaceAround>
-                    <Tab value="home">
-                        <a class=HIDDEN_URL_TAILWIND_CSS href="/">
-                            "Home"
-                        </a>
-                    </Tab>
-                    <Tab value="resume">"Resume"</Tab>
-                    <Tab value="contact">"Contact"</Tab>
-                    <Tab value="blog">"Blog"</Tab>
+                    <NavItem value="Home" href="/" />
+                    <NavItem value="Blog" href="/blog" />
+                    <NavItem value="Resume" href="/resume" />
+                    <NavItem value="Contact" href="/contact" />
                 </Flex>
             </TabList>
             <Flex class="nav-external-links" justify=FlexJustify::End>
