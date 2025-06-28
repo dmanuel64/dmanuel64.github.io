@@ -2,8 +2,8 @@ use leptos::prelude::*;
 use thaw::*;
 
 #[component]
-pub fn Home() -> impl IntoView {
+pub fn NotFound() -> impl IntoView {
     let loading_bar = LoadingBarInjection::expect_context();
-    loading_bar.finish();
-    view! { <h1>"Home"</h1> }
+    loading_bar.error();
+    view! { <h1>"Not Found"</h1> }
 }
