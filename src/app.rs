@@ -1,3 +1,4 @@
+use icondata_core::Icon;
 use leptos::prelude::*;
 use leptos_router::{
     components::*,
@@ -27,8 +28,7 @@ fn NavItem(
         <Tab
             class="nav-item"
             value=id
-            on:click=move |ev| {
-                ev.prevent_default();
+            on:click=move |_| {
                 if current_url.get().path() != navigate_url.as_str() {
                     loading_bar.start();
                     navigate(navigate_url.as_str(), Default::default());
@@ -46,19 +46,45 @@ fn NavItem(
 }
 
 #[component]
+fn ExternalLinkIcon(
+    #[prop(into)] icon: Icon,
+    #[prop(into, optional)] href: String,
+    #[prop(into, default = String::from("2em"))] width: String,
+    #[prop(into, default = String::from("2em"))] height: String,
+) -> impl IntoView {
+    let navigate = use_navigate();
+    view! {
+        <a href=href>
+            <Icon
+                class="external-link-icon text-inherit no-underline hover:text-inherit active:text-inherit visited:text-inherit"
+                icon=icon
+                width=width
+                height=height
+            />
+        </a>
+    }
+}
+
+#[component]
 fn NavBar() -> impl IntoView {
     view! {
-        <Flex class="nav-bar" align=FlexAlign::Center justify=FlexJustify::SpaceBetween>
+        <Flex class="nav-bar" justify=FlexJustify::SpaceBetween>
             <TabList>
-                <Flex class="nav-items" justify=FlexJustify::SpaceAround>
+                <Flex class="nav-items" align=FlexAlign::Center justify=FlexJustify::SpaceAround>
                     <NavItem value="Home" href="/" />
                     <NavItem value="Blog" href="/blog" />
                     <NavItem value="Resume" href="/resume" />
                     <NavItem value="Contact" href="/contact" />
                 </Flex>
             </TabList>
-            <Flex class="nav-external-links" justify=FlexJustify::End>
-                <Text>"External links"</Text>
+            <Flex
+                class="nav-external-links"
+                gap=FlexGap::Large
+                align=FlexAlign::Center
+                justify=FlexJustify::End
+            >
+                <ExternalLinkIcon icon=icondata_ai::AiGithubFilled href="https://github.com/dmanuel64" />
+                <ExternalLinkIcon icon=icondata_ai::AiLinkedinFilled href="https://www.linkedin.com/in/dylan-manuel-661642169" />
             </Flex>
         </Flex>
     }
