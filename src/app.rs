@@ -9,6 +9,8 @@ use thaw::*;
 
 use crate::pages::*;
 
+const HIDDEN_LINK_TAILSCALE_CLASS: &str =
+    "text-inherit no-underline hover:text-inherit active:text-inherit visited:text-inherit";
 #[component]
 fn NavItem(
     #[prop(into)] value: String,
@@ -35,10 +37,7 @@ fn NavItem(
                 }
             }
         >
-            <a
-                class="text-inherit no-underline hover:text-inherit active:text-inherit visited:text-inherit"
-                href=href
-            >
+            <a class=HIDDEN_LINK_TAILSCALE_CLASS href=href>
                 {value}
             </a>
         </Tab>
@@ -52,15 +51,9 @@ fn ExternalLinkIcon(
     #[prop(into, default = String::from("2em"))] width: String,
     #[prop(into, default = String::from("2em"))] height: String,
 ) -> impl IntoView {
-    let navigate = use_navigate();
     view! {
-        <a href=href>
-            <Icon
-                class="external-link-icon text-inherit no-underline hover:text-inherit active:text-inherit visited:text-inherit"
-                icon=icon
-                width=width
-                height=height
-            />
+        <a class="external-link-icon" href=href>
+            <Icon class=HIDDEN_LINK_TAILSCALE_CLASS icon=icon width=width height=height />
         </a>
     }
 }
@@ -68,26 +61,50 @@ fn ExternalLinkIcon(
 #[component]
 fn NavBar() -> impl IntoView {
     view! {
-        <Flex class="nav-bar" justify=FlexJustify::SpaceBetween>
-            <TabList>
-                <Flex class="nav-items" align=FlexAlign::Center justify=FlexJustify::SpaceAround>
-                    <NavItem value="Home" href="/" />
-                    <NavItem value="Blog" href="/blog" />
-                    <NavItem value="Resume" href="/resume" />
-                    <NavItem value="Contact" href="/contact" />
-                </Flex>
-            </TabList>
+        <Flex class="nav-bar" justify=FlexJustify::Center>
             <Flex
-                class="nav-external-links"
-                gap=FlexGap::Large
-                align=FlexAlign::Center
-                justify=FlexJustify::End
+                style="
+                width: 75%;
+                border-radius: 8px;
+                box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+                "
+                justify=FlexJustify::SpaceBetween
             >
-                <ExternalLinkIcon icon=icondata_ai::AiGithubFilled href="https://github.com/dmanuel64" />
-                <ExternalLinkIcon icon=icondata_ai::AiLinkedinFilled href="https://www.linkedin.com/in/dylan-manuel-661642169" />
+                <TabList>
+                    <Flex
+                        class="nav-items"
+                        align=FlexAlign::Center
+                        justify=FlexJustify::SpaceAround
+                    >
+                        <NavItem value="Home" href="/" />
+                        <NavItem value="Blog" href="/blog" />
+                        <NavItem value="Resume" href="/resume" />
+                        <NavItem value="Contact" href="/contact" />
+                    </Flex>
+                </TabList>
+                <Flex
+                    class="nav-external-links"
+                    gap=FlexGap::Large
+                    align=FlexAlign::Center
+                    justify=FlexJustify::End
+                >
+                    <ExternalLinkIcon
+                        icon=icondata_ai::AiGithubFilled
+                        href="https://github.com/dmanuel64"
+                    />
+                    <ExternalLinkIcon
+                        icon=icondata_ai::AiLinkedinFilled
+                        href="https://www.linkedin.com/in/dylan-manuel-661642169"
+                    />
+                </Flex>
             </Flex>
         </Flex>
     }
+}
+
+#[component]
+fn Footer() -> impl IntoView {
+    view! {}
 }
 
 #[component]
@@ -107,7 +124,9 @@ pub fn App() -> impl IntoView {
                             // <Route path=path!("/blog/:id") view=UserProfile />
                             </Routes>
                         </main>
-                        <footer></footer>
+                        <footer>
+                            <Footer />
+                        </footer>
                     </LoadingBarProvider>
                 </ConfigProvider>
             </Router>
