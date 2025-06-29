@@ -11,6 +11,7 @@ rustflags = ["--cfg", "erase_components"]
 rustflags = ["--cfg", "erase_components"]
 
 [dependencies]
+chrono = "0.4.41"
 console_error_panic_hook = "0.1.7"
 console_log = "1.0.0"
 icondata_ai = "0.1.0"

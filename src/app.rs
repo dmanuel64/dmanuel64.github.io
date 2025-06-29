@@ -1,3 +1,7 @@
+use std::sync::LazyLock;
+
+use crate::pages::*;
+use chrono::{Datelike, Utc};
 use icondata_core::Icon;
 use leptos::prelude::*;
 use leptos_router::{
@@ -5,12 +9,12 @@ use leptos_router::{
     hooks::{use_navigate, use_url},
     path,
 };
+use leptos_use::{use_calendar, UseCalendarReturn};
 use thaw::*;
-
-use crate::pages::*;
 
 const HIDDEN_LINK_TAILSCALE_CLASS: &str =
     "text-inherit no-underline hover:text-inherit active:text-inherit visited:text-inherit";
+
 #[component]
 fn NavItem(
     #[prop(into)] value: String,
@@ -64,7 +68,8 @@ fn NavBar() -> impl IntoView {
         <Flex class="nav-bar" justify=FlexJustify::Center>
             <Flex
                 style="
-                width: 75%;
+                width: 100%;
+                margin: 1%;
                 border-radius: 8px;
                 box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
                 "
@@ -104,7 +109,22 @@ fn NavBar() -> impl IntoView {
 
 #[component]
 fn Footer() -> impl IntoView {
-    view! {}
+    view! {
+        <Flex
+            class="footer"
+            style="height: 100%"
+            vertical=true
+            gap=FlexGap::Size(0)
+            align=FlexAlign::Center
+        >
+            <Divider />
+            <Flex vertical=true style="height: 100%" align=FlexAlign::Center justify=FlexJustify::Center>
+                <Text>
+                    {format!("© {} Dylan Manuel. All rights reserved.", Utc::now().year())}
+                </Text>
+            </Flex>
+        </Flex>
+    }
 }
 
 #[component]
@@ -114,19 +134,21 @@ pub fn App() -> impl IntoView {
             <Router>
                 <ConfigProvider>
                     <LoadingBarProvider>
-                        <nav>
-                            <NavBar />
-                        </nav>
-                        <main>
-                            <Routes fallback=|| NotFound>
-                                <Route path=path!("/") view=Home />
-                            // <Route path=path!("/blog") view=Users />
-                            // <Route path=path!("/blog/:id") view=UserProfile />
-                            </Routes>
-                        </main>
-                        <footer>
-                            <Footer />
-                        </footer>
+                        <Flex vertical=true style="height: 100vh" justify=FlexJustify::SpaceBetween>
+                            <nav>
+                                <NavBar />
+                            </nav>
+                            <main>
+                                <Routes fallback=|| NotFound>
+                                    <Route path=path!("/") view=Home />
+                                // <Route path=path!("/blog") view=Users />
+                                // <Route path=path!("/blog/:id") view=UserProfile />
+                                </Routes>
+                            </main>
+                            <footer style="height: 10%">
+                                <Footer />
+                            </footer>
+                        </Flex>
                     </LoadingBarProvider>
                 </ConfigProvider>
             </Router>
