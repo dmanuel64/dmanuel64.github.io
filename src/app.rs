@@ -66,18 +66,22 @@ fn ExternalLinkIcon(
 #[component]
 fn NavBar(theme: RwSignal<Theme>) -> impl IntoView {
     let checked = RwSignal::new(false);
-    view! {
-        <Flex class="nav-bar" justify=FlexJustify::Center>
-            <Flex
-                style="
+    let navbar_style = Memo::new(move |_| {
+        format!(
+            "
+                background-color: {};
                 width: 100%;
                 margin: 1%;
                 padding: 0.5%;
                 border-radius: 8px;
                 box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
-                "
-                justify=FlexJustify::SpaceBetween
-            >
+                ",
+            theme.get().color.color_neutral_background_6
+        )
+    });
+    view! {
+        <Flex class="nav-bar" justify=FlexJustify::Center>
+            <Flex style=navbar_style justify=FlexJustify::SpaceBetween>
                 <TabList>
                     <Flex
                         class="nav-items"
@@ -134,11 +138,20 @@ fn NavBar(theme: RwSignal<Theme>) -> impl IntoView {
 }
 
 #[component]
-fn Footer() -> impl IntoView {
+fn Footer(theme: RwSignal<Theme>) -> impl IntoView {
+    let footer_style = Memo::new(move |_| {
+        format!(
+            "
+                background-color: {};
+                height: 100%
+                ",
+            theme.get().color.color_neutral_background_6
+        )
+    });
     view! {
         <Flex
             class="footer"
-            style="height: 100%"
+            style=footer_style
             vertical=true
             gap=FlexGap::Size(0)
             align=FlexAlign::Center
@@ -183,7 +196,7 @@ pub fn App() -> impl IntoView {
                                 </Routes>
                             </main>
                             <footer style="height: 10%">
-                                <Footer />
+                                <Footer theme />
                             </footer>
                         </Flex>
                     </LoadingBarProvider>
