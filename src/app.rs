@@ -1,5 +1,3 @@
-use std::sync::LazyLock;
-
 use crate::pages::*;
 use chrono::{Datelike, Utc};
 use icondata_core::Icon;
@@ -9,7 +7,7 @@ use leptos_router::{
     hooks::{use_navigate, use_url},
     path,
 };
-use leptos_use::{use_calendar, UseCalendarReturn};
+use leptos_use::use_preferred_dark;
 use thaw::*;
 
 const HIDDEN_LINK_TAILSCALE_CLASS: &str =
@@ -57,19 +55,24 @@ fn ExternalLinkIcon(
 ) -> impl IntoView {
     view! {
         <a class="external-link-icon" href=href>
-            <Icon class=HIDDEN_LINK_TAILSCALE_CLASS icon=icon width=width height=height />
+            <Icon class=HIDDEN_LINK_TAILSCALE_CLASS icon width height />
         </a>
     }
 }
 
+/// TODO: kind of prop drilling with the theme signal. It does make code cleaner with a NavBar
+/// and Footer component, though since these are only used in the App component, it could
+/// be inserted directly in there.
 #[component]
-fn NavBar() -> impl IntoView {
+fn NavBar(theme: RwSignal<Theme>) -> impl IntoView {
+    let checked = RwSignal::new(false);
     view! {
         <Flex class="nav-bar" justify=FlexJustify::Center>
             <Flex
                 style="
                 width: 100%;
                 margin: 1%;
+                padding: 0.5%;
                 border-radius: 8px;
                 box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
                 "
@@ -87,20 +90,43 @@ fn NavBar() -> impl IntoView {
                         <NavItem value="Contact" href="/contact" />
                     </Flex>
                 </TabList>
-                <Flex
-                    class="nav-external-links"
-                    gap=FlexGap::Large
-                    align=FlexAlign::Center
-                    justify=FlexJustify::End
-                >
-                    <ExternalLinkIcon
-                        icon=icondata_ai::AiGithubFilled
-                        href="https://github.com/dmanuel64"
-                    />
-                    <ExternalLinkIcon
-                        icon=icondata_ai::AiLinkedinFilled
-                        href="https://www.linkedin.com/in/dylan-manuel-661642169"
-                    />
+                <Flex gap=FlexGap::Size(30)>
+                    <Flex align=FlexAlign::Center>
+                        <Show
+                            when=move || checked.get()
+                            fallback=|| {
+                                view! {
+                                    <Icon icon=icondata_ai::AiSunFilled width="2em" height="2em" />
+                                }
+                            }
+                        >
+                            <Icon icon=icondata_ai::AiMoonFilled width="2em" height="2em" />
+                        </Show>
+                        <Switch
+                            checked
+                            on:click=move |_| {
+                                theme
+                                    .set(
+                                        if !checked.get() { Theme::dark() } else { Theme::light() },
+                                    );
+                            }
+                        />
+                    </Flex>
+                    <Flex
+                        class="nav-external-links"
+                        style="padding-right: 12px"
+                        gap=FlexGap::Large
+                        align=FlexAlign::Center
+                    >
+                        <ExternalLinkIcon
+                            icon=icondata_ai::AiGithubFilled
+                            href="https://github.com/dmanuel64"
+                        />
+                        <ExternalLinkIcon
+                            icon=icondata_ai::AiLinkedinFilled
+                            href="https://www.linkedin.com/in/dylan-manuel-661642169"
+                        />
+                    </Flex>
                 </Flex>
             </Flex>
         </Flex>
@@ -118,7 +144,12 @@ fn Footer() -> impl IntoView {
             align=FlexAlign::Center
         >
             <Divider />
-            <Flex vertical=true style="height: 100%" align=FlexAlign::Center justify=FlexJustify::Center>
+            <Flex
+                vertical=true
+                style="height: 100%"
+                align=FlexAlign::Center
+                justify=FlexJustify::Center
+            >
                 <Text>
                     {format!("© {} Dylan Manuel. All rights reserved.", Utc::now().year())}
                 </Text>
@@ -129,14 +160,20 @@ fn Footer() -> impl IntoView {
 
 #[component]
 pub fn App() -> impl IntoView {
+    let is_dark_preferred = use_preferred_dark();
+    let theme = RwSignal::new(if is_dark_preferred.get() {
+        Theme::dark()
+    } else {
+        Theme::light()
+    });
     view! {
         <div id="root">
             <Router>
-                <ConfigProvider>
+                <ConfigProvider theme>
                     <LoadingBarProvider>
                         <Flex vertical=true style="height: 100vh" justify=FlexJustify::SpaceBetween>
                             <nav>
-                                <NavBar />
+                                <NavBar theme />
                             </nav>
                             <main>
                                 <Routes fallback=|| NotFound>
