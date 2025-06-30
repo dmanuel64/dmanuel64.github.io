@@ -13,6 +13,10 @@ use thaw::*;
 const HIDDEN_LINK_TAILSCALE_CLASS: &str =
     "text-inherit no-underline hover:text-inherit active:text-inherit visited:text-inherit";
 
+fn get_nav_and_footer_background_color(theme: &Theme) -> String {
+    theme.color.color_neutral_background_4.clone()
+}
+
 #[component]
 fn NavItem(
     #[prop(into)] value: String,
@@ -76,7 +80,7 @@ fn NavBar(theme: RwSignal<Theme>) -> impl IntoView {
                 border-radius: 8px;
                 box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
                 ",
-            theme.get().color.color_neutral_background_6
+            get_nav_and_footer_background_color(&theme.get())
         )
     });
     view! {
@@ -90,7 +94,7 @@ fn NavBar(theme: RwSignal<Theme>) -> impl IntoView {
                     >
                         <NavItem value="Home" href="/" />
                         <NavItem value="Blog" href="/blog" />
-                        <NavItem value="Resume" href="/resume" />
+                        <NavItem value="Projects" href="/projects" />
                         <NavItem value="Contact" href="/contact" />
                     </Flex>
                 </TabList>
@@ -106,15 +110,17 @@ fn NavBar(theme: RwSignal<Theme>) -> impl IntoView {
                         >
                             <Icon icon=icondata_ai::AiMoonFilled width="2em" height="2em" />
                         </Show>
-                        <Switch
-                            checked
-                            on:click=move |_| {
-                                theme
-                                    .set(
-                                        if !checked.get() { Theme::dark() } else { Theme::light() },
-                                    );
-                            }
-                        />
+                        <Tooltip content="Toggle light/dark mode">
+                            <Switch
+                                checked
+                                on:click=move |_| {
+                                    theme
+                                        .set(
+                                            if !checked.get() { Theme::dark() } else { Theme::light() },
+                                        );
+                                }
+                            />
+                        </Tooltip>
                     </Flex>
                     <Flex
                         class="nav-external-links"
@@ -145,7 +151,7 @@ fn Footer(theme: RwSignal<Theme>) -> impl IntoView {
                 background-color: {};
                 height: 100%
                 ",
-            theme.get().color.color_neutral_background_6
+            get_nav_and_footer_background_color(&theme.get())
         )
     });
     view! {
