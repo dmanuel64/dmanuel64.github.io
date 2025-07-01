@@ -64,9 +64,6 @@ fn ExternalLinkIcon(
     }
 }
 
-/// TODO: kind of prop drilling with the theme signal. It does make code cleaner with a NavBar
-/// and Footer component, though since these are only used in the App component, it could
-/// be inserted directly in there.
 #[component]
 fn NavBar(theme: RwSignal<Theme>) -> impl IntoView {
     let checked = RwSignal::new(false);
@@ -74,7 +71,7 @@ fn NavBar(theme: RwSignal<Theme>) -> impl IntoView {
         format!(
             "
                 background-color: {};
-                width: 100%;
+                width: 97%;
                 margin: 1%;
                 padding: 0.5%;
                 border-radius: 8px;
@@ -149,7 +146,7 @@ fn Footer(theme: RwSignal<Theme>) -> impl IntoView {
         format!(
             "
                 background-color: {};
-                height: 100%
+                height: inherit;
                 ",
             get_nav_and_footer_background_color(&theme.get())
         )
@@ -165,7 +162,7 @@ fn Footer(theme: RwSignal<Theme>) -> impl IntoView {
             <Divider />
             <Flex
                 vertical=true
-                style="height: 100%"
+                style="height: inherit;"
                 align=FlexAlign::Center
                 justify=FlexJustify::Center
             >
@@ -186,28 +183,32 @@ pub fn App() -> impl IntoView {
         Theme::light()
     });
     view! {
-        <div id="root">
-            <Router>
-                <ConfigProvider theme>
-                    <LoadingBarProvider>
-                        <Flex vertical=true style="height: 100vh" justify=FlexJustify::SpaceBetween>
-                            <nav>
-                                <NavBar theme />
-                            </nav>
-                            <main>
-                                <Routes fallback=|| NotFound>
-                                    <Route path=path!("/") view=Home />
-                                // <Route path=path!("/blog") view=Users />
-                                // <Route path=path!("/blog/:id") view=UserProfile />
-                                </Routes>
-                            </main>
-                            <footer style="height: 10%">
-                                <Footer theme />
-                            </footer>
-                        </Flex>
-                    </LoadingBarProvider>
-                </ConfigProvider>
-            </Router>
-        </div>
+        <Router>
+            <ConfigProvider theme>
+                <div>
+                    <Layout attr:id="root">
+                        <LoadingBarProvider>
+                            <LayoutHeader attr:style="z-index: 1000; position: fixed; top: 0; width: 100vw;">
+                                <nav>
+                                    <NavBar theme />
+                                </nav>
+                            </LayoutHeader>
+                            <Layout attr:style="min-height: calc(100vh - 85px); margin-top: 85px; z-index: 0">
+                                <main style="min-height: calc(100vh - 85px - 50px);">
+                                    <Routes fallback=|| NotFound>
+                                        <Route path=path!("/") view=Home />
+                                    // <Route path=path!("/blog") view=Users />
+                                    // <Route path=path!("/blog/:id") view=UserProfile />
+                                    </Routes>
+                                </main>
+                                <footer style="height: 50px">
+                                    <Footer theme />
+                                </footer>
+                            </Layout>
+                        </LoadingBarProvider>
+                    </Layout>
+                </div>
+            </ConfigProvider>
+        </Router>
     }
 }
