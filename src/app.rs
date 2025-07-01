@@ -185,29 +185,27 @@ pub fn App() -> impl IntoView {
     view! {
         <Router>
             <ConfigProvider theme>
-                <div>
-                    <Layout attr:id="root">
-                        <LoadingBarProvider>
-                            <LayoutHeader attr:style="z-index: 1000; position: fixed; top: 0; width: 100vw;">
-                                <nav>
-                                    <NavBar theme />
-                                </nav>
-                            </LayoutHeader>
-                            <Layout attr:style="min-height: calc(100vh - 85px); margin-top: 85px; z-index: 0">
-                                <main style="min-height: calc(100vh - 85px - 50px);">
-                                    <Routes fallback=|| NotFound>
-                                        <Route path=path!("/") view=Home />
-                                    // <Route path=path!("/blog") view=Users />
-                                    // <Route path=path!("/blog/:id") view=UserProfile />
-                                    </Routes>
-                                </main>
-                                <footer style="height: 50px">
-                                    <Footer theme />
-                                </footer>
-                            </Layout>
-                        </LoadingBarProvider>
-                    </Layout>
-                </div>
+                <Layout attr:id="root">
+                    <LoadingBarProvider>
+                        <LayoutHeader attr:style="z-index: 1000; position: fixed; top: 0; width: 100vw;">
+                            <nav>
+                                <NavBar theme />
+                            </nav>
+                        </LayoutHeader>
+                        <Layout attr:style="min-height: calc(100vh - 85px); margin-top: 85px; z-index: 0">
+                            <main style="min-height: calc(100vh - 85px - 50px);">
+                                <Routes fallback=|| NotFound>
+                                    <Route path=path!("/") view=Home />
+                                // <Route path=path!("/blog") view=Users />
+                                // <Route path=path!("/blog/:id") view=UserProfile />
+                                </Routes>
+                            </main>
+                            <footer style="height: 50px">
+                                <Footer theme />
+                            </footer>
+                        </Layout>
+                    </LoadingBarProvider>
+                </Layout>
             </ConfigProvider>
         </Router>
     }
