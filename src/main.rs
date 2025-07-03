@@ -2,6 +2,7 @@ mod app;
 mod components;
 mod icons;
 mod pages;
+mod utils;
 
 use leptos::prelude::*;
 

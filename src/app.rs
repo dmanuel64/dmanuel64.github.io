@@ -2,7 +2,6 @@ use crate::{components::Backdrop, pages::*};
 use chrono::{Datelike, Utc};
 use icondata_core::Icon;
 use leptos::prelude::*;
-use leptos_fetch::QueryClient;
 use leptos_router::{
     components::*,
     hooks::{use_navigate, use_url},
@@ -177,7 +176,6 @@ pub fn App() -> impl IntoView {
     let is_dark_preferred = use_preferred_dark();
     let dark_mode = RwSignal::new(false);
     let theme = RwSignal::new(Theme::light());
-    QueryClient::provide();
     // TODO: should work on making this into a Memo. According to Leptos docs this is suboptimal use of an Effect
     Effect::new(move |_| {
         let dark_preferred = is_dark_preferred.get();

@@ -1,6 +1,8 @@
 use leptos::{logging, prelude::*};
-use thaw::*;
 use std::fs;
+use thaw::*;
+
+use crate::utils;
 
 #[component]
 fn ProjectPreview(
@@ -62,6 +64,7 @@ pub fn Projects() -> impl IntoView {
             <Grid class="project-previews" cols=2>
                 <ProjectPreview name="CodableLLM" description=LONG_STR href="" tags />
             </Grid>
+            {utils::get_content("projects/codablellm.md")}
         </Flex>
     }
 }
