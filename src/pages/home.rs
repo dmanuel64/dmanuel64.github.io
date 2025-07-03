@@ -2,9 +2,9 @@ use icondata_core::Icon;
 use leptos::prelude::*;
 use thaw::*;
 
-use crate::{components::Backdrop, icons};
+use crate::icons;
 
-const LONG_STR: &str = "
+pub const LONG_STR: &str = "
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed at sem sed libero tincidunt gravida. Morbi tempor posuere est, sed blandit sapien gravida a. Vivamus pretium libero at nisi dictum, sed bibendum justo congue. Phasellus tincidunt enim sit amet faucibus pretium. Fusce hendrerit, sapien vitae finibus gravida, lorem lacus ullamcorper libero, et tincidunt sapien nulla in enim. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Integer id semper justo. Nullam porttitor, metus ac euismod euismod, lectus erat pulvinar neque, nec efficitur ligula leo nec diam. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Integer sed erat nec mi feugiat malesuada. Suspendisse at efficitur arcu, nec pretium ex. Suspendisse ut nisl in libero blandit faucibus nec non nisl. Duis ut nunc eros. Curabitur hendrerit tellus nec ex iaculis, sed gravida mi tincidunt. Nunc nec viverra erat, at imperdiet purus. In id tellus vitae orci malesuada posuere. Etiam mattis quam id tortor varius, ut convallis felis dapibus. Etiam quis odio eget elit convallis posuere. Aliquam erat volutpat. Vestibulum congue gravida justo. Vivamus lacinia facilisis leo, sed facilisis metus vestibulum nec. Pellentesque et diam lacinia, dapibus erat sed, blandit nulla. Nam pulvinar nisl sit amet nisl pretium, a dictum sapien mattis. Integer feugiat laoreet lacus, sit amet feugiat turpis congue id. Sed mattis, ligula vel hendrerit bibendum, neque justo blandit risus, at gravida velit nulla eget neque. Morbi porttitor eu elit nec pharetra. Suspendisse potenti. Ut a dictum mi. Proin ut dignissim sem. Aenean vestibulum accumsan ex, et porttitor augue dignissim ut. Proin scelerisque tellus sit amet arcu porttitor, non posuere massa consequat. Vivamus tincidunt sem at facilisis laoreet. Nam tristique, arcu sed vehicula porta, nisl lorem dapibus justo, at pulvinar erat velit sit amet lorem.
 ";
 

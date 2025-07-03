@@ -2,6 +2,7 @@ use crate::{components::Backdrop, pages::*};
 use chrono::{Datelike, Utc};
 use icondata_core::Icon;
 use leptos::prelude::*;
+use leptos_fetch::QueryClient;
 use leptos_router::{
     components::*,
     hooks::{use_navigate, use_url},
@@ -65,8 +66,10 @@ fn ExternalLinkIcon(
 }
 
 #[component]
-fn NavBar(theme: RwSignal<Theme>) -> impl IntoView {
-    let checked = RwSignal::new(false);
+fn NavBar(
+    theme: RwSignal<Theme>,
+    #[prop(optional, into)] dark_mode: RwSignal<bool>,
+) -> impl IntoView {
     let navbar_style = Memo::new(move |_| {
         format!(
             "
@@ -89,7 +92,7 @@ fn NavBar(theme: RwSignal<Theme>) -> impl IntoView {
                         align=FlexAlign::Center
                         justify=FlexJustify::SpaceAround
                     >
-                        <NavItem value="Home" href="/" />
+                        <NavItem value="Home" href="/home" />
                         <NavItem value="Blog" href="/blog" />
                         <NavItem value="Projects" href="/projects" />
                         <NavItem value="Contact" href="/contact" />
@@ -97,23 +100,18 @@ fn NavBar(theme: RwSignal<Theme>) -> impl IntoView {
                 </TabList>
                 <Flex gap=FlexGap::Size(30)>
                     <Flex align=FlexAlign::Center>
-                        <Show
-                            when=move || checked.get()
-                            fallback=|| {
-                                view! {
-                                    <Icon icon=icondata_ai::AiSunFilled width="2em" height="2em" />
-                                }
-                            }
-                        >
-                            <Icon icon=icondata_ai::AiMoonFilled width="2em" height="2em" />
-                        </Show>
+                        <Icon icon=icondata_ai::AiMoonFilled width="2em" height="2em" />
                         <Tooltip content="Toggle light/dark mode">
                             <Switch
-                                checked
+                                checked=dark_mode
                                 on:click=move |_| {
                                     theme
                                         .set(
-                                            if !checked.get() { Theme::dark() } else { Theme::light() },
+                                            if !dark_mode.get() {
+                                                Theme::dark()
+                                            } else {
+                                                Theme::light()
+                                            },
                                         );
                                 }
                             />
@@ -177,27 +175,35 @@ fn Footer(theme: RwSignal<Theme>) -> impl IntoView {
 #[component]
 pub fn App() -> impl IntoView {
     let is_dark_preferred = use_preferred_dark();
-    let theme = RwSignal::new(if is_dark_preferred.get() {
-        Theme::dark()
-    } else {
-        Theme::light()
+    let dark_mode = RwSignal::new(false);
+    let theme = RwSignal::new(Theme::light());
+    QueryClient::provide();
+    // TODO: should work on making this into a Memo. According to Leptos docs this is suboptimal use of an Effect
+    Effect::new(move |_| {
+        let dark_preferred = is_dark_preferred.get();
+        if dark_preferred {
+            theme.set(Theme::dark());
+        }
+        dark_mode.set(dark_preferred);
     });
     view! {
         <Router>
             <ConfigProvider theme>
                 <LoadingBarProvider>
-                    <div style="position: relative; width: 100vw; height: 100vh;">
-                        <Backdrop theme />
-                        <Layout attr:id="root">
+                    <div id="root" style="position: relative; width: 100vw; height: 100vh;">
+                        <Layout>
+                            <Backdrop theme />
                             <LayoutHeader attr:style="z-index: 1000; position: fixed; top: 0; width: 100vw;">
                                 <nav>
-                                    <NavBar theme />
+                                    <NavBar theme dark_mode />
                                 </nav>
                             </LayoutHeader>
                             <Layout attr:style="min-height: calc(100vh - 85px); margin-top: 85px; z-index: 0">
                                 <main style="min-height: calc(100vh - 85px - 50px);">
                                     <Routes fallback=|| NotFound>
                                         <Route path=path!("/") view=Home />
+                                        <Route path=path!("/home") view=Home />
+                                        <Route path=path!("/projects") view=Projects />
                                     // <Route path=path!("/blog") view=Users />
                                     // <Route path=path!("/blog/:id") view=UserProfile />
                                     </Routes>
