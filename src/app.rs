@@ -92,9 +92,9 @@ fn NavBar(
                         justify=FlexJustify::SpaceAround
                     >
                         <NavItem value="Home" href="/home" />
-                        <NavItem value="Blog" href="/blog" />
-                        <NavItem value="Projects" href="/projects" />
-                        <NavItem value="Contact" href="/contact" />
+                        // <NavItem value="Blog" href="/blog" />
+                        // <NavItem value="Projects" href="/projects" />
+                        // <NavItem value="Contact" href="/contact" />
                     </Flex>
                 </TabList>
                 <Flex gap=FlexGap::Size(30)>
@@ -201,7 +201,7 @@ pub fn App() -> impl IntoView {
                                     <Routes fallback=|| NotFound>
                                         <Route path=path!("/") view=Home />
                                         <Route path=path!("/home") view=Home />
-                                        <Route path=path!("/projects") view=Projects />
+                                        // <Route path=path!("/projects") view=Projects />
                                     // <Route path=path!("/blog") view=Users />
                                     // <Route path=path!("/blog/:id") view=UserProfile />
                                     </Routes>

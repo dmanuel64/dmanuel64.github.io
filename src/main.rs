@@ -1,5 +1,6 @@
 mod app;
 mod components;
+mod errors;
 mod icons;
 mod pages;
 mod utils;

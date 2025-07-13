@@ -12,6 +12,7 @@ rustflags = ["--cfg", "erase_components"]
 
 [dependencies]
 chrono = "0.4.41"
+comrak = "0.39.1"
 console_error_panic_hook = "0.1.7"
 console_log = "1.0.0"
 icondata_ai = "0.1.0"
@@ -22,3 +23,4 @@ leptos-use = "0.15.10"
 leptos_router = { version = "0.7.8", features = ["nightly"] }
 log = "0.4.27"
 thaw = { version = "0.4.7", features = ["csr", "nightly"] }
+thiserror = "2.0.12"
