@@ -1,3 +1,3 @@
-pub mod navbar;
-pub mod section;
-pub mod footer;
+mod backdrops;
+
+pub use crate::components::backdrops::*;

@@ -1,53 +1,82 @@
-use leptos::*;
+use icondata_core::Icon;
+use leptos::prelude::*;
 use thaw::*;
 
-use crate::components::{footer::Footer, navbar::NavBar};
+use crate::icons;
+
+pub const LONG_STR: &str = "
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed at sem sed libero tincidunt gravida. Morbi tempor posuere est, sed blandit sapien gravida a. Vivamus pretium libero at nisi dictum, sed bibendum justo congue. Phasellus tincidunt enim sit amet faucibus pretium. Fusce hendrerit, sapien vitae finibus gravida, lorem lacus ullamcorper libero, et tincidunt sapien nulla in enim. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Integer id semper justo. Nullam porttitor, metus ac euismod euismod, lectus erat pulvinar neque, nec efficitur ligula leo nec diam. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Integer sed erat nec mi feugiat malesuada. Suspendisse at efficitur arcu, nec pretium ex. Suspendisse ut nisl in libero blandit faucibus nec non nisl. Duis ut nunc eros. Curabitur hendrerit tellus nec ex iaculis, sed gravida mi tincidunt. Nunc nec viverra erat, at imperdiet purus. In id tellus vitae orci malesuada posuere. Etiam mattis quam id tortor varius, ut convallis felis dapibus. Etiam quis odio eget elit convallis posuere. Aliquam erat volutpat. Vestibulum congue gravida justo. Vivamus lacinia facilisis leo, sed facilisis metus vestibulum nec. Pellentesque et diam lacinia, dapibus erat sed, blandit nulla. Nam pulvinar nisl sit amet nisl pretium, a dictum sapien mattis. Integer feugiat laoreet lacus, sit amet feugiat turpis congue id. Sed mattis, ligula vel hendrerit bibendum, neque justo blandit risus, at gravida velit nulla eget neque. Morbi porttitor eu elit nec pharetra. Suspendisse potenti. Ut a dictum mi. Proin ut dignissim sem. Aenean vestibulum accumsan ex, et porttitor augue dignissim ut. Proin scelerisque tellus sit amet arcu porttitor, non posuere massa consequat. Vivamus tincidunt sem at facilisis laoreet. Nam tristique, arcu sed vehicula porta, nisl lorem dapibus justo, at pulvinar erat velit sit amet lorem.
+";
 
 #[component]
-fn NavCard(title: &'static str, href: &'static str, children: Children) -> impl IntoView {
+fn TechStackItem(#[prop(into)] name: String, #[prop(into)] icon: Icon) -> impl IntoView {
     view! {
-        <a href=href>
-            <Layout
-                content_class="rounded-3xl shadow-lg bg-white overflow-hidden text-center"
-                class="border border-gray-200 rounded-3xl shadow-lg bg-white overflow-hidden transform transition-transform duration-200 hover:scale-105 animate-fadeInMoveUp"
-            >
-                <LayoutHeader class="relative -m-6 -mt-6">
-                    <Image
-                        class="w-full h-auto"
-                        src="https://s3.bmp.ovh/imgs/2021/10/2c3b013418d55659.jpg"
-                        alt="Card image"
-                    />
-                </LayoutHeader>
-                <Layout class="mt-4 p-6">
-                    <LayoutHeader class="text-lg font-semibold text-gray-800">{title}</LayoutHeader>
-                    <div class="mt-2 text-gray-600 whitespace-normal break-words">
-                        {children()}
-                    </div>
-                </Layout>
-            </Layout>
-        </a>
+        <GridItem class="tech-stack-item">
+            <Flex vertical=true align=FlexAlign::Center justify=FlexJustify::Center>
+                <Icon icon=icon width="100px" height="100px" />
+                <Text style="font-size: 1.25em;">{name}</Text>
+            </Flex>
+        </GridItem>
+    }
+}
+
+#[component]
+fn TechStack() -> impl IntoView {
+    view! {
+        <Grid cols=5 x_gap=12 y_gap=12>
+            <TechStackItem name="Rust" icon=icons::RustOutlined />
+            <TechStackItem name="Python" icon=icondata_ai::AiPythonOutlined />
+            <TechStackItem name="Docker" icon=icondata_ai::AiDockerOutlined />
+            <TechStackItem name="CI/CD" icon=icondata_ai::AiDeploymentUnitOutlined />
+            <TechStackItem name="Leptos" icon=icons::LeptosOutlined />
+            <TechStackItem name="Large Language Models" icon=icondata_ai::AiOpenAIOutlined />
+            <TechStackItem name="Apache Kafka" icon=icons::KafkaOutlined />
+            <TechStackItem name="Amazon Web Services" icon=icons::AWSOutlined />
+            <TechStackItem name="JavaScript" icon=icondata_ai::AiJavaScriptOutlined />
+            <TechStackItem name="TypeScript" icon=icons::TypeScriptOutlined />
+        </Grid>
     }
 }
 
 #[component]
 pub fn Home() -> impl IntoView {
+    let loading_bar = LoadingBarInjection::expect_context();
+    loading_bar.finish();
     view! {
-        <Flex align=FlexAlign::Center vertical=true>
-            <Layout class="text-center animate-fadeIn">
-                <LayoutHeader>"Welcome to my Website"</LayoutHeader>
-                "Here is some text"
-            </Layout>
-            <Grid cols=3 x_gap=8 y_gap=8 class="p-8">
-                <GridItem class="delay-1000">
-                    <NavCard title="Home" href="/">"To Home page"</NavCard>
-                </GridItem>
-                <GridItem class="delay-1000">
-                    <NavCard title="Resume" href="/resume">"To Resume page"</NavCard>
-                </GridItem>
-                // <GridItem class="delay-1000">
-                //     <NavCard title="Contact" href="/contact">"To Contact page"</NavCard>
-                // </GridItem>
-            </Grid>
+        <Flex
+            class="home"
+            style="min-height: inherit;"
+            vertical=true
+            align=FlexAlign::Center
+            justify=FlexJustify::Center
+        >
+            <Flex class="home-introduction" align=FlexAlign::Center justify=FlexJustify::Center>
+                <Image
+                    src="/images/profile.png"
+                    width="200px"
+                    height="200px"
+                    shape=ImageShape::Circular
+                />
+                <Flex class="home-about-me" vertical=true>
+                    <Text style="font-size: 1.5em;">
+                        <b>"Hi, my name is"</b>
+                    </Text>
+                    <Text style="font-size: 2em;">
+                        <strong>
+                            <b>"Dylan Manuel"</b>
+                        </strong>
+                    </Text>
+                    <Text style="max-width: 200px;">
+                        "
+                        I'm a software engineer based in Houston, Texas. I specialize in building 
+                        full-stack applications.
+                        "
+                    </Text>
+                </Flex>
+            </Flex>
+            // TODO: create CSS for headers
+            <h1 style="font-size: 1.75em; font-weight: 900; margin-top: 2%">"Tech Stack"</h1>
+            <TechStack />
         </Flex>
     }
 }

@@ -1,11 +1,9 @@
-use leptos::*;
+use leptos::prelude::*;
 use thaw::*;
-
-use crate::components::navbar::NavBar;
 
 #[component]
 pub fn NotFound() -> impl IntoView {
-    view! {
-        <Text class="text-center align-middle justify-center text-5xl">"404 - Not Found"</Text>
-    }
+    let loading_bar = LoadingBarInjection::expect_context();
+    loading_bar.error();
+    view! { <h1>"Not Found"</h1> }
 }

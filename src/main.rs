@@ -1,14 +1,16 @@
 mod app;
 mod components;
+mod errors;
+mod icons;
 mod pages;
+mod utils;
 
-use app::App;
-use leptos::*;
+use leptos::prelude::*;
+
+use crate::app::App;
 
 fn main() {
-    #[cfg(feature = "dev")]
-    {
-        console_error_panic_hook::set_once();
-    }
-    leptos::mount_to_body(|| view! { <App /> })
+    _ = console_log::init_with_level(log::Level::Debug);
+    console_error_panic_hook::set_once();
+    mount_to_body(App)
 }
