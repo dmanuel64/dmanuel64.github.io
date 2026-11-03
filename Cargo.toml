@@ -1,26 +1,31 @@
 [package]
-name = "dmanuel64-site"
-version = "1.0.0"
-edition = "2021"
+name = "site"
+version = "0.1.0"
+edition = "2024"
 
-# TODO: comment out for release
-[target.x86_64-pc-windows-msvc]
-rustflags = ["--cfg", "erase_components"]
-
-[target.wasm32-unknown-unknown]
-rustflags = ["--cfg", "erase_components"]
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-chrono = "0.4.41"
-comrak = "0.39.1"
-console_error_panic_hook = "0.1.7"
-console_log = "1.0.0"
-icondata_ai = "0.1.0"
-icondata_core = "0.1.0"
-include_dir="0.7.4"
-leptos = { version = "0.7.8", features = ["csr", "nightly"] }
-leptos-use = "0.15.10"
-leptos_router = { version = "0.7.8", features = ["nightly"] }
-log = "0.4.27"
-thaw = { version = "0.4.7", features = ["csr", "nightly"] }
-thiserror = "2.0.12"
+leptos = { version = "0.8", features = ["csr", "nightly"] }
+leptos_meta = { version = "0.8" }
+leptos_router = { version = "0.8", features = ["nightly"] }
+console_log = "1"
+log = "0.4"
+console_error_panic_hook = "0.1"
+
+# utils
+# strum = { version = "0.25", features = ["derive", "strum_macros"] }
+# strum_macros = "0.25"
+
+
+[dev-dependencies]
+wasm-bindgen = "0.2"
+wasm-bindgen-test = "0.3"
+web-sys = { version = "0.3", features = ["Document", "Window"] }
+
+
+[profile.release]
+opt-level = 'z'
+lto = true
+codegen-units = 1
+panic = "abort"

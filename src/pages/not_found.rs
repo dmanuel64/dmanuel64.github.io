@@ -1,9 +1,7 @@
 use leptos::prelude::*;
-use thaw::*;
 
+/// 404 Not Found Page
 #[component]
 pub fn NotFound() -> impl IntoView {
-    let loading_bar = LoadingBarInjection::expect_context();
-    loading_bar.error();
-    view! { <h1>"Not Found"</h1> }
+    view! { <h1>"Uh oh!" <br /> "We couldn't find that page!"</h1> }
 }

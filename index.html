@@ -1,13 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
-  <meta charset="utf-8" />
-  <link data-trunk rel="rust" data-wasm-opt="z" />
-  <link data-trunk rel="icon" type="image/ico" href="public/favicon.ico" />
-  <link data-trunk rel="copy-dir" href="public/images/" />
-  <link data-trunk rel="tailwind-css" href="input.css" />
-  <title>Dylan Manuel</title>
+  <!-- Add a plain CSS file: see https://trunk-rs.github.io/trunk/guide/assets/#css -->
+  <!-- If using Tailwind with Leptos CSR, see https://trunk-rs.github.io/trunk/guide/assets/#tailwind instead-->
+  <link data-trunk rel="scss" href="public/styles.scss" />
+
+  <!-- Include favicon in dist output: see https://trunk-rs.github.io/trunk/guide/assets/#icon -->
+  <link data-trunk rel="icon" href="public/favicon.ico" />
+
+  <!-- include support for `wasm-bindgen --weak-refs` - see: https://rustwasm.github.io/docs/wasm-bindgen/reference/weak-references.html -->
+  <link data-trunk rel="rust" data-wasm-opt="z" data-weak-refs />
 </head>
 
 <body></body>

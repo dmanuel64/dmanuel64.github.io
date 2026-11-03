@@ -1,16 +1,12 @@
-mod app;
-mod components;
-mod errors;
-mod icons;
-mod pages;
-mod utils;
-
 use leptos::prelude::*;
-
-use crate::app::App;
+use site::App;
 
 fn main() {
+    // set up logging
     _ = console_log::init_with_level(log::Level::Debug);
     console_error_panic_hook::set_once();
-    mount_to_body(App)
+
+    mount_to_body(|| {
+        view! { <App /> }
+    })
 }
