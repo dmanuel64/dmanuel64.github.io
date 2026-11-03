@@ -1,13 +1,14 @@
 use leptos::prelude::*;
 use leptos_meta::*;
 use leptos_router::{components::*, path};
+use thaw::*;
 
 // Modules
 mod components;
 mod pages;
 
 // Top-Level pages
-use crate::pages::home::Home;
+use crate::pages::{home::Home, wedding::Wedding};
 
 /// An app router which renders the homepage and handles 404's
 #[component]
@@ -25,10 +26,13 @@ pub fn App() -> impl IntoView {
         <Meta charset="UTF-8" />
         <Meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-        <Router>
-            <Routes fallback=|| view! { NotFound }>
-                <Route path=path!("/") view=Home />
-            </Routes>
-        </Router>
+        <ConfigProvider>
+            <Router>
+                <Routes fallback=|| view! { NotFound }>
+                    <Route path=path!("/") view=Home />
+                    <Route path=path!("/the-manuel-wedding") view=Wedding />
+                </Routes>
+            </Router>
+        </ConfigProvider>
     }
 }
